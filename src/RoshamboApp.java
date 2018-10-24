@@ -18,7 +18,9 @@ public class RoshamboApp {
 	public static void main(String[] args) {
 		Scanner userInput = new Scanner(System.in);
 		Player userChoice = new UserRoshambo();
-		Player opponentChoice = new GalacticEmpire();
+		Player opponentChoiceGE = new GalacticEmpire();
+		Player opponentChoiceRA = new TheRebelAlliance();
+
 		boolean isValid = false;
 		Roshambo opponentPick;
 
@@ -33,30 +35,33 @@ public class RoshamboApp {
 					"Would you like to play against \"The Rebel Alliance\" or \"The Galactic Empire\"? (RA/GE): ");
 			String opponentName = userInput.nextLine();
 
+			// get opponent's move after user choice's an opponent
+			// TODO
+			if (opponentName.toLowerCase().startsWith("ra")) {
+				opponentChoiceRA.setOpponentName("Rebel Alliance");
+				opponentPick = opponentChoiceRA.generateRoshambo();
+				opponentChoiceRA.setOpponentChoice(opponentPick);
+			} else if (opponentName.toLowerCase().startsWith("ge")) {
+				opponentChoiceGE.setUserName("Galactic Empire");
+				opponentPick = opponentChoiceGE.generateRoshambo();
+				opponentChoiceGE.setOpponentChoice(opponentPick);
+			}
+
 			// get user to make decision about move, and set user's move
 			Roshambo userPick = userChoice.generateRoshambo();
 			userChoice.setUserChoice(userPick);
 
-			// get opponent's move after user choice's an opponent
 			if (opponentName.toLowerCase().startsWith("ra")) {
-				opponentChoice = new TheRebelAlliance();
-				opponentChoice.setOpponentName("Rebel Alliance");
-				opponentPick = opponentChoice.generateRoshambo();
-				opponentChoice.setOpponentChoice(opponentPick);
+				String finalResponse = getWinner(userChoice, opponentChoiceRA, userName, opponentName);
+				System.out.println(userChoice.getUserName() + ": " + userChoice.getUserChoice() + "\n"
+						+ opponentChoiceRA.getOpponentName() + ": " + opponentChoiceRA.getOpponentChoice()
+						+ finalResponse);
 			} else if (opponentName.toLowerCase().startsWith("ge")) {
-				opponentChoice.setUserName("Galactic Empire");
-				opponentPick = opponentChoice.generateRoshambo();
-				opponentChoice.setOpponentChoice(opponentPick);
-			} else {
-				System.out.println("Yowza");
-				// TODO make something through "Validator"
+				String finalResponse = getWinner(userChoice, opponentChoiceGE, userName, opponentName);
+				System.out.println(userChoice.getUserName() + ": " + userChoice.getUserChoice() + "\n"
+						+ opponentChoiceGE.getOpponentName() + ": " + opponentChoiceGE.getOpponentChoice()
+						+ finalResponse);
 			}
-
-			// TODO get "to string()" to work
-			String finalResponse = getWinner(userChoice, opponentChoice, userName, opponentName);
-
-			System.out.println(userChoice.getUserName() + ": " + userChoice.getUserChoice() + "\n"
-					+ opponentChoice.getOpponentName() + ": " + opponentChoice.getOpponentChoice() + finalResponse);
 
 			System.out.println();
 

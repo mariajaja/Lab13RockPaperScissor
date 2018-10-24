@@ -21,7 +21,8 @@ public class UserRoshambo extends Player {
 
 	@Override
 	public Roshambo generateRoshambo() {
-		Roshambo choice = null;
+		Roshambo choice = Roshambo.ROCK;
+		// program won't use values within the if-else. not sure why
 		System.out.print("Rock, paper, or scissors? (R/P/S): ");
 		String userResponse = userInput.nextLine();
 
